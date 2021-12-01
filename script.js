@@ -51,6 +51,8 @@ let Covid = {
 //скорость
 let speed = 10 //скорость перемещения
 
+
+
 function drawBox() {
     ctx.fillStyle = Box.color
     ctx.fillRect(Box.x, Box.y, Box.w, Box.h)
