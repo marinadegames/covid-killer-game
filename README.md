@@ -1,1 +1,3 @@
-# covid-killer-game
+# covid-killer-game #
+
+`This is my JS-game`
