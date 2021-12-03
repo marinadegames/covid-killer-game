@@ -1,3 +1,19 @@
-# covid-killer-game #
+# 🦠 == Covid Killer == 💀 #
 
-`This is my JS-game`
+#### 🎮 This game is made in **_`JS`_**  ####
+👋 Привет! Это мой проект игры на JS `COVID KILLER`.  
+🎨 Использую `canvas`
+Цель: защитить организм от нападающих вирусов!
+
+
+🎯 `v 0.0.1` - add _canvas_ | add _box_ & _circle_  
+💥 `v 0.0.2` - add _collision_ (**collision not working!!**) 
+
+Target-list:  
+🔲  
+🔲  
+🔲  
+🔲  
+🔲  
+🔲  
+🔲  
