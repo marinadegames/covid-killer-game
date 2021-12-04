@@ -7,9 +7,13 @@
 
 
 🎯 `v 0.0.1` - add _canvas_ | add _box_ & _circle_  
-💥 `v 0.0.2` - add _collision_ (**collision not working!!**) 
+ `v 0.0.2` - add _collision_ (**collision not working!!**)  
+💥
 
-## ☑️ Target-list: ##  
-🔲  -  add choice color 🎨  
-🔲  -  add change of size ↕️  
-🔲  -  add choice shape 🟠🟩🔷
+## ☑️ Target-list: ## 
+
+️☑️- ~~add **collision**~~  
+☑️- ~~add **counter** and **lifes** ❤️~~  
+🔲  -  add choice **color** 🎨  
+🔲  -  add change of **size** ↕️  
+🔲  -  add choice **shape** 🟠🟩🔷
