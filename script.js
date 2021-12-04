@@ -44,7 +44,7 @@ let Box = {
 }
 // КОВИД
 let Covid = {
-    x: randX(),
+    x: 200, //randX(),
     y: 50, //canvas.height + 30
     r: 20,
     color: 'red',
@@ -84,15 +84,15 @@ function draw(){
     }
 
     // collision
-    if (Box.x+Box.w > Covid.x - Covid.r &&
-        Box.y+Box.h > Covid.y + Covid.r &&
-        Box.y-Box.h < Covid.y - Covid.r &&
-        Box.x-Box.w < Covid.x + Covid.r
-        ){
-        Covid.x += 3}
-    else if(Box.y-Box.h < Covid.y - Covid.r) {
-        Covid.y -= 3
 
+    if (Box.x + Box.w > Covid.x - Covid.r &&
+        Box.x - Box.w/2 < Covid.x &&
+        Box.y+Box.h > Covid.y - Covid.r &&
+        Box.y-Box.h/2 < Covid.y
+    )
+    {
+        console.log('collision!!!')
+        //Covid.y -= 3
     }
 }
     //console.log(`COVID: ${Covid.x} BOX: ${Box.x}` )
