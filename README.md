@@ -7,8 +7,8 @@
 
 
 🎯 `v 0.0.1` - add _canvas_ | add _box_ & _circle_  
- `v 0.0.2` - add _collision_ (**collision not working!!**)  
-💥
+🥂 `v 0.0.2` - add _collision_ (**collision not working!!**)  
+💥 `v 0.0.3`  - add _counter_, _life_ and delete covid
 
 ## ☑️ Target-list: ## 
 
