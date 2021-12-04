@@ -2,12 +2,21 @@ let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+let countHTML = document.getElementById('counter')
+let lifeHTML = document.getElementById('life')
 
 //нажатия
 let rightPressed = false
 let leftPressed = false
 let upPressed = false
 let downPressed = false
+
+//очки и жизни
+let life = 3;
+let count = 0;
+
+//countHTML.innerHTML = `Counter: ${count}`;
+//lifeHTML.innerHTML = `Life: ${life}`
 
 let randX = () => Math.floor(Math.random() * (canvas.width - 0))
 function keyDownHandler(e) {
@@ -44,8 +53,8 @@ let Box = {
 }
 // КОВИД
 let Covid = {
-    x: 200, //randX(),
-    y: 50, //canvas.height + 30
+    x: randX(),
+    y: canvas.height,
     r: 20,
     color: 'red',
     speed: 0.5,
@@ -64,27 +73,23 @@ function drawBox() {
 function drawCovid(){
     ctx.beginPath()
     ctx.arc(Covid.x, Covid.y, Covid.r,0, Math.PI*2)
-    Covid.y = 100 //-=Covid.speed
+    Covid.y-=Covid.speed
     ctx.fillStyle = Covid.color
     ctx.fill();
-
+}
+function drawCount () {
+    ctx.fillText('Counter: ')
 }
 
 // DRAW!!!
 function draw(){
+    countHTML.innerHTML = `Counter: ${count}`;
+    lifeHTML.innerHTML = `Life: ${life}`
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawBox()
-
-    //draw covid
-    if (Covid.y - (Covid.r/2) > 0){
-        drawCovid()
-    }else{
-        Covid.y = canvas.height + 30
-        Covid.x = randX();
-    }
+    drawCovid()
 
     // collision
-
     if (Box.x + Box.w > Covid.x - Covid.r &&
         Box.x - Box.w/2 < Covid.x &&
         Box.y+Box.h > Covid.y - Covid.r &&
@@ -92,8 +97,21 @@ function draw(){
     )
     {
         console.log('collision!!!')
-        //Covid.y -= 3
+        Covid.x = randX()
+        Covid.y = canvas.height
+        count++
     }
+
+    // kill life
+    if (Covid.y - Covid.r < 0){
+
+        console.log('kill')
+        Covid.x = randX()
+        Covid.y = canvas.height
+        life--
+    }
+
+
 }
     //console.log(`COVID: ${Covid.x} BOX: ${Box.x}` )
 

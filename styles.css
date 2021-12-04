@@ -1,3 +1,20 @@
+body{
+    font-family: Calibri, sans-serif ;
+}
 #canvas{
     border: 1px solid black;
+}
+.header{
+    display: flex;
+    flex-direction: column;
+}
+
+#counter{
+    margin: 2rem 0 0 0;
+    padding: 0;
+}
+#life{
+    margin: 0 0 2rem 0;
+    padding: 0;
+
 }
