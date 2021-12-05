@@ -18,7 +18,7 @@ let count = 0;
 //countHTML.innerHTML = `Counter: ${count}`;
 //lifeHTML.innerHTML = `Life: ${life}`
 
-let randX = () => Math.floor(Math.random() * (canvas.width - 0))
+
 function keyDownHandler(e) {
     if (e.keyCode === 39) {
         rightPressed = true;
@@ -53,12 +53,21 @@ let Box = {
 }
 // КОВИД
 let Covid = {
-    x: randX(),
+    x: Math.floor(Math.random() * (canvas.width - 0)),
     y: canvas.height,
     r: 20,
     color: 'red',
     speed: 0.5,
 }
+//vitamin
+let Vitamin = {
+    x: Math.floor(Math.random() * (canvas.width - 0)),
+    y: canvas.height,
+    r: 10,
+    color: 'green',
+    speed: 0.8,
+}
+
 function drawBox() {
     ctx.fillStyle = Box.color
     ctx.fillRect(Box.x, Box.y, Box.w, Box.h)
@@ -77,17 +86,26 @@ function drawCovid(){
     ctx.fillStyle = Covid.color
     ctx.fill();
 }
-function drawCount () {
-    ctx.fillText('Counter: ')
+function drawVitamin(){
+    ctx.beginPath()
+    ctx.arc(Vitamin.x, Vitamin.y, Vitamin.r,0, Math.PI*2)
+    Vitamin.y-=Vitamin.speed
+    ctx.fillStyle = Vitamin.color
+    ctx.fill();
 }
 
 // DRAW!!!
 function draw(){
+
+    //Вывод данных на экран
     countHTML.innerHTML = `Counter: ${count}`;
     lifeHTML.innerHTML = `Life: ${life}`
+
+    //очистка холста
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    //draw
     drawBox()
-    drawCovid()
 
     // collision
     if (Box.x + Box.w > Covid.x - Covid.r &&
@@ -97,24 +115,39 @@ function draw(){
     )
     {
         console.log('collision!!!')
-        Covid.x = randX()
+        Covid.x = Math.floor(Math.random() * (canvas.width - 0))
         Covid.y = canvas.height
+        Box.h -=1
+        Box.w -=1
         count++
+    }
+
+    if (Box.x + Box.w > Vitamin.x - Vitamin.r &&
+        Box.x - Box.w/2 < Vitamin.x &&
+        Box.y+Box.h > Vitamin.y - Covid.r &&
+        Box.y-Box.h/2 < Vitamin.y
+    )
+    {
+        console.log('collision vitamin')
+        Vitamin.x = Math.floor(Math.random() * (canvas.width - 0))
+        Vitamin.y = canvas.height
+        Box.h +=5
+        Box.w +=5
     }
 
     // kill life
     if (Covid.y - Covid.r < 0){
 
         console.log('kill')
-        Covid.x = randX()
+        Covid.x = Math.floor(Math.random() * (canvas.width - 0))
         Covid.y = canvas.height
         life--
     }
 
 
 }
-    //console.log(`COVID: ${Covid.x} BOX: ${Box.x}` )
 
 
 setInterval(draw, 10);
-
+setInterval(drawCovid, 10)
+setInterval(drawVitamin, 10)
