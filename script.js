@@ -1,153 +1,148 @@
-let canvas = document.getElementById('canvas');
+// find elements
+let canvas = document.getElementById('canvas')
+let start = document.getElementById('start')
+let pauseButton = document.getElementById('pause')
+let covidImg = document.getElementById('covidImg')
+//let covidImg = new Image()
+//covidImg.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Coronavirus_icon.svg/2048px-Coronavirus_icon.svg.png'
+
+// get context
 let ctx = canvas.getContext('2d');
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
-let countHTML = document.getElementById('counter')
-let lifeHTML = document.getElementById('life')
 
-//нажатия
-let rightPressed = false
-let leftPressed = false
-let upPressed = false
-let downPressed = false
+// event listeners
+document.addEventListener("mousemove", mouseMoveHandler, false);
 
-//очки и жизни
-let life = 3;
-let count = 0;
-
-//countHTML.innerHTML = `Counter: ${count}`;
-//lifeHTML.innerHTML = `Life: ${life}`
+// variables
+let score = 0
+let antibodyRadius = 15
+let mouseX = 0
+let mouseY = 0
+let speedCovid = 0.5 //0.3
+let lifes = 3
+let pause = false
 
 
-function keyDownHandler(e) {
-    if (e.keyCode === 39) {
-        rightPressed = true;
-    } else if (e.keyCode === 37) {
-        leftPressed = true;
-    }else if (e.keyCode === 38 ){
-        upPressed = true
-    }else if (e.keyCode ===  40){
-        downPressed = true
+// covid parametrs
+let covidRadius = 30
+let covidX = Math.random() * canvas.width
+let covidY = 410
+
+// functions
+function mouseMoveHandler(e) {
+    mouseX = e.x
+    mouseY = e.y
+    
+}
+function drawCircle () {
+  ctx.beginPath();
+  ctx.arc(mouseX, mouseY, antibodyRadius, 0, Math.PI*2);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+}
+
+ function generatorCovid () {
+  //ctx.lineWidth=7;
+  //ctx.lineCap = 'round'
+  //ctx.beginPath()
+  //ctx.arc(covidX,covidY,covidRadius,0,Math.PI*2,true)
+  //ctx.stroke();
+  //ctx.closePath()
+
+  //let pattern = ctx.createPattern(covidImg, 'no-repeat');
+  //ctx.arc(covidX,covidY,covidRadius,0,Math.PI*2,true)
+  //ctx.fillStyle = pattern;
+  //ctx.fill();
+  ctx.beginPath()
+  ctx.drawImage(covidImg, covidX-50, covidY-50, 100, 100, )
+  //ctx.arc(covidX,covidY,covidRadius,0,Math.PI*2,true)
+  ctx.stroke();
+  ctx.closePath()
+ }
+
+ function drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Score: "+ score, 8, 20);
+}
+function drawLifes() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "red";
+  ctx.fillText("Lifes: "+ lifes, 8, 40);
+}
+function gameOverDraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.font = "40px Arial";
+  ctx.fillStyle = "red";
+  ctx.fillText("GAME OVER!", canvas.width/2-150, canvas.height/2);
+}
+
+function mainMenuDraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.font = "40px Arial";
+  ctx.fillStyle = "red";
+  ctx.fillText("COVID KILLER!", canvas.width/2-150, canvas.height/2);
+}
+function pauseDraw () {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.font = "40px Arial";
+  ctx.fillStyle = "blue";
+  ctx.fillText("Pause...", canvas.width/2-150, canvas.height/2);
+  
+  ctx.beginPath()
+  ctx.drawImage(covidImg, covidX-50, covidY-50, 100, 100, )
+  ctx.arc(covidX,covidY,covidRadius,0,Math.PI*2,true)
+  ctx.stroke();
+  ctx.closePath()
+  
+}
+function draw () {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawScore()
+  drawCircle()
+  drawLifes()
+
+  // draw covid
+  generatorCovid()
+  covidY -= speedCovid
+  if (covidY + covidRadius <= 0) {
+    if (lifes === 0) {
+      clearInterval(whatDraw)
+      whatDraw = setInterval(gameOverDraw, 10)
+    }
+    lifes--
+    covidY = canvas.height + covidRadius
+    covidX = Math.random() * canvas.width
+  }
+  // collission check
+  if (mouseX + antibodyRadius > covidX - covidRadius
+    && mouseY + antibodyRadius > covidY - covidRadius
+    && mouseX - antibodyRadius < covidX + covidRadius
+    && mouseY - antibodyRadius < covidY + covidRadius) {
+      console.log('collission!');
+      score++
+      speedCovid += 0.03
+      covidY = canvas.height + covidRadius
+      covidX = Math.random() * canvas.width
     }
 }
-function keyUpHandler(e) {
-    if (e.keyCode === 39) {
-        rightPressed = false
-    } else if (e.keyCode === 37) {
-        leftPressed = false
-    }else if (e.keyCode === 38 ){
-        upPressed = false
-    }else if (e.keyCode ===  40){
-        downPressed = false
-    }
+
+if (pause) {
+  clearInterval(whatDraw)
 }
 
-// Квадрат
-let Box = {
-    x: 100,
-    y: 100,
-    w: 50,
-    h: 50,
-    color: 'black',
-    speed: 3,
-}
-// КОВИД
-let Covid = {
-    x: Math.floor(Math.random() * (canvas.width - 0)),
-    y: canvas.height,
-    r: 20,
-    color: 'red',
-    speed: 0.5,
-}
-//vitamin
-let Vitamin = {
-    x: Math.floor(Math.random() * (canvas.width - 0)),
-    y: canvas.height,
-    r: 10,
-    color: 'green',
-    speed: 0.8,
-}
-
-function drawBox() {
-    ctx.fillStyle = Box.color
-    ctx.fillRect(Box.x, Box.y, Box.w, Box.h)
-
-    //перемещение
-    rightPressed === true && Box.x+Box.w < canvas.width ? Box.x += Box.speed : Box.x += 0
-    leftPressed === true && Box.x > 0 ? Box.x -= Box.speed : Box.x += 0
-    upPressed === true && Box.y > 0 ? Box.y -= Box.speed : Box.y -= 0
-    downPressed === true && Box.y+Box.w < canvas.height ? Box.y += 7 : Box.y -= 0
-
-}
-function drawCovid(){
-    ctx.beginPath()
-    ctx.arc(Covid.x, Covid.y, Covid.r,0, Math.PI*2)
-    Covid.y-=Covid.speed
-    ctx.fillStyle = Covid.color
-    ctx.fill();
-}
-function drawVitamin(){
-    ctx.beginPath()
-    ctx.arc(Vitamin.x, Vitamin.y, Vitamin.r,0, Math.PI*2)
-    Vitamin.y-=Vitamin.speed
-    ctx.fillStyle = Vitamin.color
-    ctx.fill();
-}
-
-// DRAW!!!
-function draw(){
-
-    //Вывод данных на экран
-    countHTML.innerHTML = `Counter: ${count}`;
-    lifeHTML.innerHTML = `Life: ${life}`
-
-    //очистка холста
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-    //draw
-    drawBox()
-
-    // collision
-    if (Box.x + Box.w > Covid.x - Covid.r &&
-        Box.x - Box.w/2 < Covid.x &&
-        Box.y+Box.h > Covid.y - Covid.r &&
-        Box.y-Box.h/2 < Covid.y
-    )
-    {
-        console.log('collision!!!')
-        Covid.x = Math.floor(Math.random() * (canvas.width - 0))
-        Covid.y = canvas.height
-        Box.h -=1
-        Box.w -=1
-        count++
-    }
-
-    if (Box.x + Box.w > Vitamin.x - Vitamin.r &&
-        Box.x - Box.w/2 < Vitamin.x &&
-        Box.y+Box.h > Vitamin.y - Covid.r &&
-        Box.y-Box.h/2 < Vitamin.y
-    )
-    {
-        console.log('collision vitamin')
-        Vitamin.x = Math.floor(Math.random() * (canvas.width - 0))
-        Vitamin.y = canvas.height
-        Box.h +=5
-        Box.w +=5
-    }
-
-    // kill life
-    if (Covid.y - Covid.r < 0){
-
-        console.log('kill')
-        Covid.x = Math.floor(Math.random() * (canvas.width - 0))
-        Covid.y = canvas.height
-        life--
-    }
+start.addEventListener('click', () => {
+  clearInterval(whatDraw)
+  lifes = 3
+  speedCovid = 0.5
+  score = 0
+  whatDraw = setInterval(draw, 10)
+})
+pauseButton.addEventListener('click', () => {
+  clearInterval(whatDraw)
+  whatDraw = setInterval(pauseDraw, 10)
+})
 
 
-}
-
-
-setInterval(draw, 10);
-setInterval(drawCovid, 10)
-setInterval(drawVitamin, 10)
+// interval draw
+let whatDraw = setInterval(mainMenuDraw, 10)
