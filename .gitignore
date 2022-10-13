@@ -1,0 +1,13 @@
+# System and IDE files
+Thumbs.db
+.DS_Store
+.vscode
+.idea
+.git
+package-lock.json
+
+# Vendors
+node_modules/
+
+# Build
+dist
