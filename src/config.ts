@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import Menu from "./scenes/Menu";
+import Game from "./scenes/Game";
 
 
 export default {
@@ -10,5 +12,9 @@ export default {
     height: innerHeight,
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
-  }
+  },
+  scene: [
+      Game,
+      Menu,
+  ]
 };
