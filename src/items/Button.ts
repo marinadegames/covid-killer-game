@@ -1,24 +1,55 @@
-import Container = Phaser.GameObjects.Container;
-import Rectangle = Phaser.GameObjects.Rectangle;
-
 export class Button {
-
-    buttonContainer: Phaser.GameObjects.Container
-    button: Phaser.GameObjects.Rectangle
-    title: Phaser.GameObjects.Text
-
     constructor(
-        scene: any,
+        scene: Phaser.Scene,
         x: number,
         y: number,
         width: number,
         height: number,
-        fillColor?: number,
-        buttonTitle?: string,
-        buttonStyle?: any
+        title: string,
+        callback?: () => void,
+        fill?: number,
+        fillAlpha?: number,
+        textStyle?: Phaser.Types.GameObjects.Text.TextStyle
     ) {
-        this.button = new Rectangle(scene, x, y, width, height, fillColor)
-        this.title = new Phaser.GameObjects.Text(scene, x, y, buttonTitle ? buttonTitle : '', buttonStyle)
-        this.buttonContainer = new Container(scene, x, y, [this.button, this.title])
+        this.createBoxButton(scene, x, y, width, height, fill ? fill : 111, fillAlpha ? fillAlpha : 1200)
+        this.setTextScene(scene, title, width, height, x, y, textStyle ? textStyle : {})
+    }
+
+    setTextScene(
+        scene: Phaser.Scene,
+        title: string,
+        x: number,
+        Y: number,
+        width: number,
+        height: number,
+        textStyle: Phaser.Types.GameObjects.Text.TextStyle
+    ) {
+        scene.add
+            .text(scene.cameras.main.centerX, scene.cameras.main.centerY, title)
+            .setOrigin(0.5)
+            .setSize(width, height)
+            .setPadding({
+                x: 40,
+                y: 15,
+            })
+            .setStyle({
+                ...textStyle,
+            })
+            .setInteractive({ useHandCursor: true })
+        // .on("pointerdown", callback ? callback : () => null)
+        // .on("pointerover", () => ({ fill: "#33A5E7" }))
+        // .on("pointerout", () => ({ fill: "#111" }))
+    }
+
+    createBoxButton(
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        fill: number,
+        fillAlpha: number
+    ) {
+        scene.add.rectangle(x, y, width, height, fill, fillAlpha)
     }
 }

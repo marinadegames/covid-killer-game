@@ -1,0 +1,17 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 4,
+  "semi": false,
+  "singleQuote": false,
+  "printWidth": 120,
+  "jsxSingleQuote": false,
+  "jsxBracketSameLine": false,
+  "jsx-curly-spacing": true,
+  "jsxTagSpacing": true,
+  "bracketSpacing": true,
+  "jsxBracketSpacing": true,
+  "bracketSameLine": true,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
