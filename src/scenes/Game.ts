@@ -35,53 +35,52 @@ export default class Game extends Phaser.Scene {
     }
 
     create() {
-        this.covid = this.physics.add.image(100, 100, "Covid").setScale(0.1)
-
-        this.add.rectangle(this.cameras.main.centerX, 0, innerWidth, 120, 0, 90)
-
-        const heart = this.add.group()
-        let count = 0
-
-        for (let i = 0; i < this.health; i++) {
-            count = count + 40
-            heart.create(count, 30, "Heart").setScale(0.03, 0.03)
-        }
-
-        this.add.text(150, 14, "Score: ", {
-            fontSize: "25px",
-            fontFamily: "Arial",
-            fontStyle: "bold",
-        })
-
-        this.add.text(240, 14, String(this.score), {
-            fontSize: "25px",
-            fontFamily: "Arial",
-            fontStyle: "bold",
-        })
-
-        const startButton = this.add
-            .text(this.cameras.main.width - 100, 30, this.stopEnable ? "Start" : "Stop", {
-                fontSize: "18px",
-                fontFamily: "Arial",
-                fontStyle: "bold",
-                color: "#111",
-            })
-            .setOrigin(0.5)
-            .setPadding({
-                x: 10,
-                y: 5,
-            })
-            .setStyle({
-                backgroundColor: "#ffffff",
-            })
-            .setInteractive({ useHandCursor: true })
-            .on("pointerdown", () => this.changeStop())
-            .on("pointerover", () => startButton.setStyle({ fill: "#33A5E7" }))
-            .on("pointerout", () => startButton.setStyle({ fill: "#111" }))
+        // this.covid = this.physics.add.image(100, 100, "Covid").setScale(0.1)
+        // this.add.rectangle(this.cameras.main.centerX, 0, innerWidth, 120, 0, 90)
+        //
+        // const heart = this.add.group()
+        // let count = 0
+        //
+        // for (let i = 0; i < this.health; i++) {
+        //     count = count + 40
+        //     heart.create(count, 30, "Heart").setScale(0.03, 0.03)
+        // }
+        //
+        // this.add.text(150, 14, "Score: ", {
+        //     fontSize: "25px",
+        //     fontFamily: "Arial",
+        //     fontStyle: "bold",
+        // })
+        //
+        // this.add.text(240, 14, String(this.score), {
+        //     fontSize: "25px",
+        //     fontFamily: "Arial",
+        //     fontStyle: "bold",
+        // })
+        //
+        // const startButton = this.add
+        //     .text(this.cameras.main.width - 100, 30, this.stopEnable ? "Start" : "Stop", {
+        //         fontSize: "18px",
+        //         fontFamily: "Arial",
+        //         fontStyle: "bold",
+        //         color: "#111",
+        //     })
+        //     .setOrigin(0.5)
+        //     .setPadding({
+        //         x: 10,
+        //         y: 5,
+        //     })
+        //     .setStyle({
+        //         backgroundColor: "#ffffff",
+        //     })
+        //     .setInteractive({ useHandCursor: true })
+        //     .on("pointerdown", () => this.changeStop())
+        //     .on("pointerover", () => startButton.setStyle({ fill: "#33A5E7" }))
+        //     .on("pointerout", () => startButton.setStyle({ fill: "#111" }))
     }
 
     update() {
-        this.physics.moveTo(this.covid, this.game.input.mousePointer.x, this.game.input.mousePointer.y, 1000, 400)
+        // this.physics.moveTo(this.covid, this.game.input.mousePointer.x, this.game.input.mousePointer.y, 1000, 400)
     }
 
     changeStop() {
