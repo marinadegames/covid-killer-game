@@ -1,7 +1,10 @@
-# 🧶 Phaser 3
-## 🖥️ Learn framework
-
-
+# 🦠 Covid Killer!
+## 🛡️ Phaser 3 game
 
 * start dev: `yarn start`
-* build prod development: `yarn build`
+* build prod: `yarn build`
+
+# 🕹️ Description: 
+
+`in progress...`
+
