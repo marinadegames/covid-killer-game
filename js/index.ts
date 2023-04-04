@@ -3,8 +3,15 @@ import { Main } from './game';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.CANVAS,
-  width: window.screen.width,
-  height: window.screen.height,
+  width: 1920,
+  height: 1080,
+  scale: {
+    parent: 'body',
+    mode: Phaser.Scale.ENVELOP,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 1920,
+    height: 1080,
+  },
   render: {
     pixelArt: true,
     antialias: true,
