@@ -1,5 +1,5 @@
 import 'phaser';
-import { Main } from './game';
+import { Menu } from './menu';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.CANVAS,
@@ -20,7 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
   },
-  scene: [Main],
+  scene: [Menu],
 };
 
 window.addEventListener('load', () => {
