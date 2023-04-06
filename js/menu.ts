@@ -17,12 +17,6 @@ export class Menu extends Scene {
 
   // texts
   loadingText: Phaser.GameObjects.Text;
-
-  // buttons
-  private btnStart: SimpleButton;
-
-  // constants
-
   public CONSTANTS: ConstantsType;
 
   preload() {
@@ -53,11 +47,7 @@ export class Menu extends Scene {
       duration: 550000,
     });
 
-    new SimpleButton(this, this.CONSTANTS.WIDTH_CENTER, this.CONSTANTS.HEIGHT_CENTER, 300, 60, 'START', this.callbackStartButton);
+    new SimpleButton(this, this.CONSTANTS.WIDTH_CENTER, this.CONSTANTS.HEIGHT_CENTER, 300, 60, 'START');
   }
   update() {}
-
-  private callbackStartButton() {
-    this.scene.start('main');
-  }
 }
