@@ -1,6 +1,5 @@
 import { Scene } from 'phaser';
-import { SimpleButton } from './simpleButton';
-
+import SimpleButton from './simpleButton';
 export type ConstantsType = {
   HEIGHT_CENTER: number;
   WIDTH_CENTER: number;
@@ -54,8 +53,11 @@ export class Menu extends Scene {
       duration: 550000,
     });
 
-    // btn start
-    this.btnStart = new SimpleButton(this, this.CONSTANTS.WIDTH_CENTER, this.CONSTANTS.HEIGHT_CENTER, 300, 90, 'START');
+    new SimpleButton(this, this.CONSTANTS.WIDTH_CENTER, this.CONSTANTS.HEIGHT_CENTER, 300, 60, 'START', this.callbackStartButton);
   }
   update() {}
+
+  private callbackStartButton() {
+    this.scene.start('main');
+  }
 }

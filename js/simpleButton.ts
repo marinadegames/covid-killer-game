@@ -1,35 +1,49 @@
-import { ConstantsType, PosType } from './menu';
+class SimpleButton extends Phaser.GameObjects.Container {
+  private text: Phaser.GameObjects.Text;
+  private background: Phaser.GameObjects.Rectangle;
 
-export class SimpleButton extends Phaser.GameObjects.Container {
-  rectangle: Phaser.GameObjects.Graphics;
-  text: Phaser.GameObjects.Text;
+  constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, text: string, callback: () => void) {
+    super(scene, x, y);
 
-  constructor(public readonly scene: Phaser.Scene, posX: number, posY: number, width: number, height: number, text: string) {
-    super(scene, posX, posY);
+    this.createText(scene, text);
+    this.createBg(scene, width, height, callback);
+  }
 
-    // this.setInteractive({ cursor: 'pointer' });
-    // this.on('pointerover', function () {
-    //   console.log('handler');
-    // });
-    // this.setInteractive({ cursor: 'pointer' });
+  private createBg(scene: Phaser.Scene, width: number, height: number, callback: () => void) {
+    this.background = new Phaser.GameObjects.Rectangle(scene, 0, 0, width, height, 0x000000);
+    this.background.setOrigin(0.5, 0.5);
+    this.background.setStrokeStyle(3, 0xffffff);
 
-    console.group();
-    console.log('x: ', posX);
-    console.log('y :', posY);
-    console.log('w :', width);
-    console.log('h :', height);
-    console.groupEnd();
+    this.add(this.background);
+    this.add(this.text);
+    this.setSize(width, height);
+    this.setInteractive({ useHandCursor: true });
 
-    this.rectangle = this.scene.add.graphics();
-    this.rectangle.lineStyle(3, 0xffffff, 1);
-    this.rectangle.strokeRoundedRect(posX - width / 2, posY - height / 2, width, height, 10);
+    // handlers
+    this.on('pointerover', () => {
+      this.background.setFillStyle(0xffffff);
+      this.text.setColor('0x000');
+    });
+    this.on('pointerout', () => {
+      this.background.setFillStyle(0x000);
+      this.text.setColor('#ffffff');
+    });
+    this.on('pointerdown', () => {
+      callback();
+    });
 
-    this.text = this.scene.add
-      .text(posX, posY, text, {
-        fontFamily: 'Roboto, sans-serif',
-        fontStyle: '900',
-        fontSize: height / 2 + 'px',
-      })
-      .setOrigin(0.5, 0.5);
+    // add to scene
+    scene.add.existing(this);
+  }
+
+  private createText(scene: Phaser.Scene, text: string) {
+    this.text = new Phaser.GameObjects.Text(scene, 0, 0, text, {
+      color: '#FFFFFF',
+      fontSize: '24px',
+      fontFamily: 'Roboto, sans-serif',
+      fontStyle: 'bold',
+    }).setOrigin(0.5, 0.5);
   }
 }
+
+export default SimpleButton;
