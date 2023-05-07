@@ -47,7 +47,15 @@ export class Menu extends Scene {
       duration: 550000,
     });
 
-    new SimpleButton(this, this.CONSTANTS.WIDTH_CENTER, this.CONSTANTS.HEIGHT_CENTER, 300, 60, 'START');
+    new SimpleButton(this, this.CONSTANTS.WIDTH_CENTER, this.CONSTANTS.HEIGHT_CENTER, 300, 60, 'START', this.startMainScene);
   }
+
   update() {}
+
+
+  private startMainScene() {
+    console.log(this.scene);
+    // @ts-ignore
+    this.scene.scene.start('main') as any;
+  }
 }
