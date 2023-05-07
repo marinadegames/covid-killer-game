@@ -19,6 +19,11 @@ export class Menu extends Scene {
   loadingText: Phaser.GameObjects.Text;
   public CONSTANTS: ConstantsType;
 
+  constructor() {
+    super({key: 'menu'});
+  }
+
+
   preload() {
     // init constants
     this.CONSTANTS = {

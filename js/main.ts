@@ -7,8 +7,9 @@ export class Main extends Scene {
     private scoreText: Phaser.GameObjects.Text;
     public score = 0;
     public lives = 3
+    public hearts: Array<Phaser.GameObjects.Image> = []
     public playerSpeed: 10;
-    public virusSpeed:number = 1;
+    public virusSpeed: number = 1;
     public virusesTimer = 2000; // ms
     public viruses: Array<Phaser.GameObjects.Image> = [];
     public antibody: Phaser.GameObjects.Image;
@@ -28,10 +29,7 @@ export class Main extends Scene {
         // load assets
         this.load.image("virus_red", "assets/covid-one.png");
         this.load.image("antibody", "assets/antibody.png");
-        this.load.image("heart", "assets/heart.webp");
-
-        this.load.plugin('rexpathfollowerplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js', true);
-
+        this.load.image("heart", "assets/heart.png");
     }
 
     create() {
@@ -46,9 +44,8 @@ export class Main extends Scene {
             this.createNewVirus()
         }, this.virusesTimer)
 
-
-
-        this.input.on('pointermove', function(pointer) {
+        // antibody move
+        this.input.on('pointermove', function (pointer) {
             this.tweens.add({
                 targets: [pointer, this.antibody],
                 x: pointer.x,
@@ -57,11 +54,14 @@ export class Main extends Scene {
                 ease: "Easing.Cubic.InOut",
             }, this);
         }, this);
+
+        // hearts lives
+        this.createHearts()
     }
 
     update() {
         this.viruses.forEach((virus, index) => {
-            virus.y-=this.virusSpeed;
+            virus.y -= this.virusSpeed;
             if (this.physics.collide(virus, this.antibody)) {
                 virus.destroy();
                 this.viruses.splice(index, 1);
@@ -71,15 +71,26 @@ export class Main extends Scene {
                 clearTimeout(this.virusTimerInterval);
                 this.virusTimerInterval = setInterval(() => {
                     this.createNewVirus()
-                },this.virusesTimer)
-                this.virusSpeed+=0.1;
+                }, this.virusesTimer)
+                this.virusSpeed += 0.1;
             }
             if (virus.y <= 100) {
                 virus.destroy();
                 this.viruses.splice(index, 1);
+                this.lives-=1
+                this.createHearts()
             }
         })
         this.antibody.setPosition(this.input.mousePointer.x, this.input.mousePointer.y)
+
+        if (this.lives <= 0 ) {
+            this.gameOver()
+        }
+
+    }
+
+    public gameOver() {
+        // this.scene.start('menu')
     }
 
     public createNewVirus() {
@@ -96,5 +107,13 @@ export class Main extends Scene {
         })
         this.physics.add.group(virus)
         this.viruses.unshift(virus)
+    }
+
+    public createHearts() {
+        this.hearts.forEach(heart => heart.destroy())
+        this.hearts = [];
+        for (let i = 0; i < this.lives; i++) {
+            this.add.image(window.screen.width - 50 - (200 * i/3.5), 50, 'heart')
+        }
     }
 }
